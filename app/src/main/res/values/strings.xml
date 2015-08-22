@@ -11,5 +11,8 @@
 
     <string name="title_section1">Basic</string>
     <string name="title_section2">Cockroft</string>
-    <string name="title_section3">CKD-EPI</string>
+    <string name="title_section3">eGFR</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

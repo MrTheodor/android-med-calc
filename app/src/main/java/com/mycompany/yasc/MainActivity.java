@@ -11,14 +11,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
 
@@ -40,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -129,6 +124,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             switch(position) {
                 case 0:
                     return BasicCalculation.newInstance();
+                case 1:
+                    return CockroftGaulta.newInstance();
+                case 2:
+                    return eGFR.newInstance();
                 default:
                     return BasicCalculation.newInstance();
             }
