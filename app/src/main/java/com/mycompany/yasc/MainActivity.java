@@ -1,28 +1,79 @@
 package com.mycompany.yasc;
 
+import java.util.Locale;
+
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
 
-    private void setValues(EditText input, EditText output, double factor) {
-        String sValue = input.getText().toString().replace(',', '.');
-        if (sValue.isEmpty()) {
-            output.setText("");
-        } else {
-            double value = Double.valueOf(sValue) * factor;
-            output.setText(String.format("%.2f", value));
+    /**
+     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * fragments for each of the sections. We use a
+     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     */
+    SectionsPagerAdapter mSectionsPagerAdapter;
+
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    ViewPager mViewPager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+
+        // Set up the action bar.
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        // When swiping between different sections, select the corresponding
+        // tab. We can also use ActionBar.Tab#select() to do this if we have
+        // a reference to the Tab.
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+        });
+
+        // For each of the sections in the app, add a tab to the action bar.
+        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+            // Create a tab with text corresponding to the page title defined by
+            // the adapter. Also specify this Activity object, which implements
+            // the TabListener interface, as the callback (listener) for when
+            // this tab is selected.
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText(mSectionsPagerAdapter.getPageTitle(i))
+                            .setTabListener(this));
         }
     }
 
@@ -38,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.about:
+                Intent intent = new Intent(this, About.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -45,137 +98,63 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        final EditText editTextGlucoseMmol = (EditText) findViewById(R.id.glucose_mmol);
-        final EditText editTextGlucoseDl = (EditText) findViewById(R.id.glucose_mg);
-        final EditText editTextCholesterolMmol = (EditText) findViewById(R.id.cholesterol_mmol);
-        final EditText editTextCholesterolDl = (EditText) findViewById(R.id.cholesterol_mg);
-        final EditText editTextTriglyceridesMmol = (EditText) findViewById(R.id.triglycerides_mmol);
-        final EditText editTextTriglyceridesDl = (EditText) findViewById(R.id.triglycerides_mg);
-        final EditText editTextHemoglobinMmol = (EditText) findViewById(R.id.hemoglobin_mmol);
-        final EditText editTextHemoglobinDl = (EditText) findViewById(R.id.hemoglobin_mg);
-        final EditText editTextCreatinineMmol = (EditText) findViewById(R.id.creatinine_mmol);
-        final EditText editTextCreatinineDl = (EditText) findViewById(R.id.creatinine_mg);
-        editTextGlucoseMmol.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setValues(editTextGlucoseMmol, editTextGlucoseDl, 18.0);
-                }
-                return false;
-            }
-        });
-
-        editTextGlucoseDl.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setValues(editTextGlucoseDl, editTextGlucoseMmol, 1.0 / 18.0);
-                }
-                return false;
-            }
-        });
-
-        editTextCholesterolMmol.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setValues(editTextCholesterolMmol, editTextCholesterolDl, 38.5);
-                }
-                return false;
-            }
-        });
-
-        editTextCholesterolDl.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setValues(editTextCholesterolDl, editTextCholesterolMmol, 1.0 / 38.5);
-                }
-                return false;
-            }
-        });
-
-        editTextTriglyceridesMmol.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setValues(editTextTriglyceridesMmol, editTextTriglyceridesDl, 88.5);
-                }
-                return false;
-            }
-        });
-
-        editTextTriglyceridesDl.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setValues(editTextTriglyceridesDl, editTextTriglyceridesMmol, 1.0 / 88.5);
-                }
-                return false;
-            }
-        });
-
-        editTextHemoglobinMmol.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setValues(editTextHemoglobinMmol, editTextHemoglobinDl, 1.6129);
-                }
-                return false;
-            }
-        });
-
-        editTextHemoglobinDl.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setValues(editTextHemoglobinDl, editTextHemoglobinMmol, 0.62);
-                }
-                return false;
-            }
-        });
-
-        editTextCreatinineMmol.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setValues(editTextCreatinineMmol, editTextCreatinineDl, 88.0);
-                }
-                return false;
-            }
-        });
-
-        editTextCreatinineDl.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setValues(editTextCreatinineDl, editTextCreatinineMmol, 1.0/88.0);
-                }
-                return false;
-            }
-        });
-
-        // Clear button.
-        Button btnClick = (Button) findViewById(R.id.btnClear);
-        btnClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editTextGlucoseMmol.setText("");
-                editTextGlucoseDl.setText("");
-                editTextCholesterolDl.setText("");
-                editTextCholesterolMmol.setText("");
-                editTextHemoglobinDl.setText("");
-                editTextHemoglobinMmol.setText("");
-                editTextTriglyceridesDl.setText("");
-                editTextTriglyceridesMmol.setText("");
-                editTextCreatinineMmol.setText("");
-                editTextCreatinineDl.setText("");
-            }
-        });
-
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        // When the given tab is selected, switch to the corresponding page in
+        // the ViewPager.
+        mViewPager.setCurrentItem(tab.getPosition());
     }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            switch(position) {
+                case 0:
+                    return BasicCalculation.newInstance();
+                default:
+                    return BasicCalculation.newInstance();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return getString(R.string.title_section1).toUpperCase(l);
+                case 1:
+                    return getString(R.string.title_section2).toUpperCase(l);
+                case 2:
+                    return getString(R.string.title_section3).toUpperCase(l);
+            }
+            return null;
+        }
+    }
+
+
+
 }
