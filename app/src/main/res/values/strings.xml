@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MedCalc</string>
+    <string name="lbl_glucose">Glucose (mmol/l) &#8596; (mg/dl)</string>
+    <string name="lbl_hemoglobin">Hemoglobin (mmol/l) &#8596; (g/dl)</string>
+    <string name="lbl_triglycerides">Triglycerides (mmol/l) &#8596; (mg/dl)</string>
+    <string name="lbl_cholesterol">Cholesterol (mmol/l) &#8596; (mg/dl)</string>
+    <string name="lbl_creatinine">Creatinine (umol/l) &#8596; (mg/dl)</string>
+    <string name="btnClear">Clear</string>
+</resources>
