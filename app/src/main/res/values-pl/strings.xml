@@ -7,4 +7,5 @@
         <string name="lbl_cholesterol">Cholesterol (mmol/l) &#8596; (mg/dl)</string>
         <string name="lbl_creatinine">Kreatynina (umol/l) &#8596; (mg/dl)</string>
         <string name="btnClear">Wyczyść</string>
+        <string name="menu_about">menu_about</string>
 </resources>
