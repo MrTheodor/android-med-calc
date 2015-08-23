@@ -7,5 +7,13 @@
         <string name="lbl_cholesterol">Cholesterol (mmol/l) &#8596; (mg/dl)</string>
         <string name="lbl_creatinine">Kreatynina (umol/l) &#8596; (mg/dl)</string>
         <string name="btnClear">Wyczyść</string>
-        <string name="menu_about">menu_about</string>
+        <string name="menu_about">Informacje</string>
+        <string name="title_activity_about">About</string>
+
+        <string name="title_section1">Podstawowe</string>
+        <string name="title_section2">Cockroft</string>
+        <string name="title_section3">eGFR</string>
+
+        <!-- TODO: Remove or change this placeholder text -->
+        <string name="hello_blank_fragment">Wkrótce !</string>
 </resources>
