@@ -15,4 +15,9 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Soon!</string>
+
+    <!-- weigth -->
+    <string name="bmi_weight">Weight (kg)</string>
+    <string name="bm_height">Height (cm)</string>
+    <string name="title_section_bmi">BMI</string>
 </resources>

@@ -125,8 +125,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                 case 0:
                     return BasicCalculation.newInstance();
                 case 1:
-                    return CockroftGaulta.newInstance();
+                    return BMI.newInstance();
                 case 2:
+                    return CockroftGaulta.newInstance();
+                case 3:
                     return eGFR.newInstance();
                 default:
                     return BasicCalculation.newInstance();
@@ -136,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -146,8 +148,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                 case 0:
                     return getString(R.string.title_section1).toUpperCase(l);
                 case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
+                    return  getString(R.string.title_section_bmi).toUpperCase(l);
                 case 2:
+                    return getString(R.string.title_section2).toUpperCase(l);
+                case 3:
                     return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;

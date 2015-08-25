@@ -16,4 +16,8 @@
 
         <!-- TODO: Remove or change this placeholder text -->
         <string name="hello_blank_fragment">Wkrótce !</string>
+        <string name="title_section_bmi">BMI</string>
+        <!-- weigth -->
+        <string name="bmi_weight">Waga (kg)</string>
+        <string name="bm_height">Wzrost (cm)</string>
 </resources>
